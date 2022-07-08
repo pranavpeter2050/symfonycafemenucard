@@ -37,22 +37,38 @@ class DishController extends AbstractController
         // Form
         $form = $this->createForm(DishType::class, $dish);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted()) {
-
+            
             // Entity Manager $em
             $em = $this->getDoctrine()->getManager();
             $em->persist($dish);
             $em->flush();
-
+            
             return $this->redirect($this->generateUrl('dish.edit'));
         }
-
-
-
+        
         // Response
         return $this->render('dish/create.html.twig', [
             'createform' => $form->createView(),
         ]);
+    }
+    
+    /**
+     * @Route("/remove/{id}", name="remove")
+     */
+    public function remove($id, DishRepository $dishRepository) {
+
+        // Entity Manager $em
+        $em = $this->getDoctrine()->getManager();
+        $dish = $dishRepository->find($id);
+        $em->remove($dish);
+        $em->flush();
+
+        // flash message
+        $this->addFlash('success', 'Dish removed successfully.');
+
+        return $this->redirect($this->generateUrl('dish.edit'));
+
     }
 }

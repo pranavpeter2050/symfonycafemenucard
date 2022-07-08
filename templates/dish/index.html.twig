@@ -4,6 +4,12 @@
 
 {% block body %}
 
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        <h3>{{ message }}</h3>
+    </div>
+{% endfor %}
+
 <br>
 <div class="container">
     <h2>Edit Dishes</h2>
@@ -26,7 +32,7 @@
                 <td>{{ dish.name }}</td>
                 <td>{{ dish.description }}</td>
                 <td>{{ dish.price }}</td>
-                <td>x</td>
+                <td><a href="{{ path('dish.remove', {id: dish.id}) }}">x</a></td>
                 <td></td>
             </tr>
         {% endfor %}
