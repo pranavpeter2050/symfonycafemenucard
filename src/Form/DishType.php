@@ -6,6 +6,7 @@ use App\Entity\Dish;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DishType extends AbstractType
 {
@@ -15,6 +16,7 @@ class DishType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('price')
+            ->add('save', SubmitType::class)
         ;
     }
 

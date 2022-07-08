@@ -36,11 +36,19 @@ class DishController extends AbstractController
         
         // Form
         $form = $this->createForm(DishType::class, $dish);
+        $form->handleRequest($request);
 
-        // Entity Manager $em
-        $em = $this->getDoctrine()->getManager();
-        // $em->persist($dish);
-        // $em->flush();
+        if ($form->isSubmitted()) {
+
+            // Entity Manager $em
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($dish);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('dish.edit'));
+        }
+
+
 
         // Response
         return $this->render('dish/create.html.twig', [
