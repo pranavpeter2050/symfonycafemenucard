@@ -14,6 +14,9 @@
                 <td>Order No.</td>
                 <td>Name</td>
                 <td>Description</td>
+                <td>Price</td>
+                <td>Delete</td>
+                <td><a href="{{ path('dish.create') }}">Create</a></td>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +25,9 @@
                 <td>{{ dish.id }}</td>
                 <td>{{ dish.name }}</td>
                 <td>{{ dish.description }}</td>
+                <td>{{ dish.price }}</td>
+                <td>x</td>
+                <td></td>
             </tr>
         {% endfor %}
         </tbody>
