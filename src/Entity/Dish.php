@@ -26,6 +26,11 @@ class Dish
      * @ORM\Column(type="string", length=255)
      */
     private $image;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="dish")
+     */
+    private $category;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

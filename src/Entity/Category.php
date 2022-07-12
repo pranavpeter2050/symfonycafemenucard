@@ -21,6 +21,11 @@ class Category
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Dish", mappedBy="category")
+     */
+    private $dish;
 
     public function getId(): ?int
     {
