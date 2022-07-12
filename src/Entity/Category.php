@@ -27,6 +27,8 @@ class Category
      */
     private $dish;
 
+    // more on Doctrine Relationships in: symfony.com/doc/current/doctrine/associations.html
+
     public function getId(): ?int
     {
         return $this->id;
