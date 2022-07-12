@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DishController!{% endblock %}
+
+{% block body %}
+
+<br>
+<div class="container">
+    
+    <h2>{{ dish.name }}</h2>
+    <img src="{{ asset('uploads/' ~ dish.image) }}">
+
+</div>
+
+{% endblock %}

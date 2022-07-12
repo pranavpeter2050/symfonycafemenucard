@@ -71,17 +71,28 @@ class DishController extends AbstractController
      * @Route("/remove/{id}", name="remove")
      */
     public function remove($id, DishRepository $dishRepository) {
-
+        
         // Entity Manager $em
         $em = $this->getDoctrine()->getManager();
         $dish = $dishRepository->find($id);
         $em->remove($dish);
         $em->flush();
-
+        
         // flash message
         $this->addFlash('success', 'Dish removed successfully.');
-
+        
         return $this->redirect($this->generateUrl('dish.edit'));
+        
+    }
+    
+    /**
+     * @Route("/view-dish/{id}", name="view")
+     */
+    public function view(Dish $dish) { // "Dish $dish" -> concept is called @ParamConverter in symfony (It converts $request parameters are converted into objects ($dish object)). It needs the (symfony) package "annotations".
+        // dump($dish);
 
+        return $this->render('dish/view.html.twig', [
+            'dish' => $dish,
+        ]);
     }
 }
