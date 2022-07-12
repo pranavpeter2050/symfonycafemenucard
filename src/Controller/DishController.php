@@ -42,6 +42,19 @@ class DishController extends AbstractController
             
             // Entity Manager $em
             $em = $this->getDoctrine()->getManager();
+
+            // Check out "symfony.com/doc/current/controller/upload_file.html" for documentation on file uploads
+            $image = $request->files->get('dish')['attachment'];
+            // $image = $form->get('dish')->getData(); // alternatively
+            if ($image) {
+                $filename = md5(uniqid()) . '.' . $image->guessClientExtension();
+            }
+            $image->move(
+                $this->getParameter('images_folder'),
+                $filename
+            );
+            $dish->setImage($filename);
+
             $em->persist($dish);
             $em->flush();
             
