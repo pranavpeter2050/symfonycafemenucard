@@ -83,6 +83,6 @@ class Category
 
     public function __toString() // allows to display a list of objects as a string.
     {
-        return $this->name;   
+        return $this->name;
     }
 }
