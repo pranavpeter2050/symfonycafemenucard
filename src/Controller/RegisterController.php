@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
@@ -15,7 +18,7 @@ class RegisterController extends AbstractController
     /**
      * @Route("/reg", name="reg")
      */
-    public function reg(): Response
+    public function reg(Request $request, UserPasswordHasherInterface $passHasher): Response
     {
         $regForm = $this->createFormBuilder()
             ->add('username', TextType::class, [
@@ -28,6 +31,26 @@ class RegisterController extends AbstractController
             ])
             ->add('register', SubmitType::class)
             ->getForm();
+
+        $regForm->handleRequest($request);
+
+        if ($regForm->isSubmitted()) {
+
+            $input = $regForm->getData();
+            // dump($input);
+
+            $user = new User();
+            $user->setUsername($input['username']);
+            
+            $user->setPassword(
+                $passHasher->hashPassword($user, $input['password'])
+            );
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            
+        }
 
 
         return $this->render('register/index.html.twig', [
