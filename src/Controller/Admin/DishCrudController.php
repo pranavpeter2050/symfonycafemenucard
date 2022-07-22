@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class DishCrudController extends AbstractCrudController
 {
@@ -23,6 +24,7 @@ class DishCrudController extends AbstractCrudController
             TextField::new('image'),
             TextEditorField::new('description'),
             NumberField::new('price'),
+            AssociationField::new('category'),
         ];
     }
    
