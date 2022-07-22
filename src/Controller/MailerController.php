@@ -8,32 +8,53 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\HttpFoundation\Request;
 
 class MailerController extends AbstractController
 {
     /**
      * @Route("/mail", name="mail")
      */
-    public function sendEmail(MailerInterface $mailer): Response
+    public function sendEmail(MailerInterface $mailer, Request $request): Response
     {
-        $table = 'table1';
-        $text = 'Please bring more salt and Napkins.';
+        $emailForm = $this->createFormBuilder()
+            ->add('message', TextareaType::class, [
+                'attr' => array('rows' => '5')
+            ])
+            ->add('submit', SubmitType::class)
+            ->getForm();
 
-        $email = (new TemplatedEmail())
-                ->from('table1@menucard.wip')
-                ->to('kellner@menucard.wip')
-                ->subject('Order Update.')
-                ->text('Extra Fries')
+        $emailForm->handleRequest($request);
 
-                ->htmlTemplate('mailer/mail.html.twig')
-                ->context([
-                    'table' => $table,
-                    'text' => $text
-                ]);
+        if ($emailForm->isSubmitted()) {
 
+            $input = $emailForm->getData();
+            $table = 'table1';
+            $text = ($input['message']);
+    
+            $email = (new TemplatedEmail())
+                    ->from('table1@menucard.wip')
+                    ->to('mywaiter@menucard.wip')
+                    ->subject('Order Update.')
+                    ->text('Extra Fries')
+    
+                    ->htmlTemplate('mailer/mail.html.twig')
+                    ->context([
+                        'table' => $table,
+                        'text' => $text
+                    ]);
+    
+    
+            $mailer->send($email);
 
-        $mailer->send($email);
+            $this->addFlash('custom-message', 'Message was sent!');
+            return $this->redirect($this->generateUrl('mail'));
+        }
 
-        return new Response('email sent.');
+        return $this->render('mailer/index.html.twig', [
+            'emailForm' =>$emailForm->createView()
+        ]);
     }
 }
