@@ -3,6 +3,8 @@
 {% block title %}Liste{% endblock %}
 
 {% block body %}
+<br>
+<div class="container">
     <h1>Liste</h1>
 
     <table class="table">
@@ -31,4 +33,5 @@
     <a href="{{ path('app_liste_edit', {'id': liste.id}) }}">edit</a>
 
     {{ include('liste/_delete_form.html.twig') }}
+</div>
 {% endblock %}
