@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Dish;
 use App\Entity\Order;
+use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,12 +12,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderController extends AbstractController
 {
     /**
-     * @Route("/order", name="app_order")
+     * @Route("/order", name="index_orders")
      */
-    public function index(): Response
+    public function index(OrderRepository $orderRepository): Response
     {
+        $orderitems = $orderRepository->findBy([
+            'table_number' => 'table1'
+        ]);
+
         return $this->render('order/index.html.twig', [
-            'controller_name' => 'OrderController',
+            'orderitems' => $orderitems,
         ]);
     }
     

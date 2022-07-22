@@ -1,7 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello OrderController!{% endblock %}
+{% block title %}Orders{% endblock %}
 
 {% block body %}
+
+{% set sum = 0 %}
+<br>
+<div class="container">
+    <h2>Your Order</h2>
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Order No.</td>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for orderitem in orderitems %}
+                {% set sum = sum + orderitem.price %}
+                <tr>
+                    <td>{{ orderitem.ordernumber }}</td>
+                    <td>{{ orderitem.name }}</td>
+                    <td>{{ orderitem.price }}</td>
+                    <td>{{ orderitem.status }}</td>
+                </tr>
+            {% endfor %}
+
+            <td></td>
+            {# <td>Total: Rs. </td> #}
+            <td></td>
+            <td>{{ sum }}</td>
+            <td></td>
+
+        </tbody>
+            
+    </table>
+
+</div>
 
 {% endblock %}
