@@ -4,6 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\Dish;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class DishCrudController extends AbstractCrudController
 {
@@ -12,14 +15,15 @@ class DishCrudController extends AbstractCrudController
         return Dish::class;
     }
 
-    /*
+    
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
+            TextField::new('name'),
+            TextField::new('image'),
             TextEditorField::new('description'),
+            NumberField::new('price'),
         ];
     }
-    */
+   
 }
