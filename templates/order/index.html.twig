@@ -17,6 +17,7 @@
                 <td>Name</td>
                 <td>Price</td>
                 <td>Status</td>
+                <td></td>
             </tr>
         </thead>
 
@@ -42,15 +43,22 @@
                         </div>
                     </td>
 
+                    <td>
+                        <a class="btn btn-outline-danger btn-sm" href="{{ path('delete_order', {id: orderitem.id}) }}">Remove</a>
+                    </td>
 
                 </tr>
             {% endfor %}
 
-            <td></td>
-            {# <td>Total: Rs. </td> #}
-            <td></td>
-            <td>{{ sum }}</td>
-            <td></td>
+            <tr>
+                <td></td>
+                {# <td>Total: Rs. </td> #}
+                <td></td>
+                <td>{{ sum }} EUR</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
         </tbody>
             
