@@ -28,8 +28,11 @@
                     <td>{{ orderitem.ordernumber }}</td>
                     <td>{{ orderitem.name }}</td>
                     <td>{{ orderitem.price }}</td>
-                    <td>{{ orderitem.status }}</td>
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <td>{{ orderitem.status }}</td>
+                    {% endif %}
 
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <td>
                         <div class="dropdown">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,10 +45,13 @@
                             </div>
                         </div>
                     </td>
+                    {% endif %}
 
+                    {% if orderitem.status == 'open' %}
                     <td>
                         <a class="btn btn-outline-danger btn-sm" href="{{ path('delete_order', {id: orderitem.id}) }}">Remove</a>
                     </td>
+                    {% endif %}
 
                 </tr>
             {% endfor %}
