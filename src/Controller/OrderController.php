@@ -37,6 +37,7 @@ class OrderController extends AbstractController
         $em->persist($order);
         $em->flush();
 
+        $this->addFlash('order', $order->getName(). ' was added to your order.');
 
         return $this->redirect($this->generateUrl('menu'));
     }
